@@ -1,5 +1,5 @@
 from flask import Flask, request, redirect, render_template
-from flask.ext.images import Images
+from flask_images import Images
 
 
 app = Flask(__name__)
@@ -18,7 +18,7 @@ def index():
     background = request.args.get('background', '#000000')
     transform = request.args.get('transform', '')
     enlarge = bool(request.args.get('enlarge'))
-    return render_template('main.tpl',
+    return render_template('main.html',
         url=url,
         width=width,
         height=height,
