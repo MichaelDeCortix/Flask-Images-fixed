@@ -12,6 +12,7 @@ import os
 import re
 import struct
 import sys
+import posixpath
 
 from six import iteritems, PY3, string_types, text_type
 if PY3:
@@ -153,7 +154,7 @@ class Images(object):
         # indicator that unsanitized data may be getting through.
         # Mutating the scheme syntax to match is a little gross, but it works
         # for today.
-        norm_path = os.path.normpath(local_path)
+        norm_path = posixpath.normpath(local_path)
         if local_path.replace('://', ':/') != norm_path or norm_path.startswith('../'):
             raise ValueError('path is not normalized')
 
