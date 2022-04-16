@@ -245,10 +245,6 @@ class Images(object):
         
         size = ImageSize(image=image, **kw)
 
-        # Get into the right colour space.
-        #if not image.mode.upper().startswith('RGB'):
-        #    image = image.convert('RGBA')
-
         # Apply any requested transform.
         if size.transform:
             image = Transform(size.transform, image.size).apply(image)
