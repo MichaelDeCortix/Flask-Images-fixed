@@ -245,6 +245,10 @@ class Images(object):
         
         size = ImageSize(image=image, **kw)
 
+        # Get into the right colour space.
+        #if not image.mode.upper().startswith('RGB'):
+        #    image = image.convert('RGBA')
+
         # Apply any requested transform.
         if size.transform:
             image = Transform(size.transform, image.size).apply(image)
@@ -265,10 +269,16 @@ class Images(object):
         elif size.mode == modes.PAD:
             pad_color = str(background or 'black')
             padded = Image.new(image.mode, (size.width, size.height), pad_color)
-            padded.paste(image, (
-                (size.width  - size.op_width ) // 2,
-                (size.height - size.op_height) // 2
-            ))
+            if image.mode == 'RGBA':
+                padded.paste(image, (
+                    (size.width  - size.op_width ) // 2,
+                    (size.height - size.op_height) // 2
+                ), image)
+            else:
+                padded.paste(image, (
+                    (size.width  - size.op_width ) // 2,
+                    (size.height - size.op_height) // 2
+                ))
             return padded
             
         elif size.mode == modes.CROP:
